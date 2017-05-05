@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue JS</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+<style type="text/css">
+    .list-name{
+        font-size: 115%;
+    }
+    .list-info{
+        font-size: 90%;
+        margin: 0;
+        font-style: italic;
+        color: blue;
+    }
+    .list-group-item{
+        cursor:pointer
+    }
+    .list-group-item:hover{
+        background: #abc;
+    }
+    .selected{
+        background: rgba(171, 119, 204, 0.2);
+    }
+
+	
+</style>
+
+</head>
+<body>
+<div id="myFirstApp">
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="list-group">
+                <div @click="show(item)" class="list-group-item" v-for="item in contacts"><p class="list-name">{{item.name}} </p> <p class="list-info"><span>{{item.phone}}</span> | <span>{{item.email}}</span> </p></div>
+            </div>
+            <div class="alert alert-warning" v-if="contacts.length==0">Книга пуста</div>
+            <a href="#"
+               class="btn btn-info btn-block"
+               data-toggle="modal"
+               data-target="#editStudent"
+            >Add</a>
+
+        </div>
+        <div class="col-md-8">
+            <h1 v-if="contacts.length!=0">{{opened.name}} {{message}}</h1>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Contacts</div>
+                <div class="panel-body">
+                    <div>Phone: <b>{{opened.phone}}</b></div>
+                    <div>Email: <b v-if="contacts.length!=0">{{opened.email}}</b></div>
+                </div>
+            </div>
+
+            <!-- panel-warning- обрамляет в синий контейнер -->
+            <div class="panel alert-info">
+                <div class="panel-body">
+                    <b v-if="contacts.length!=0">Faculty: {{getOpenedDep}}</b>(<span v-if="contacts.length!=0">{{opened.name}}</span>)
+                </div>
+            </div>
+
+
+            <hr>
+            <blockquote v-if="contacts.length!=0">{{opened.address}}</p>
+            </blockquote>
+<!--            <pre>
+                {{contacts}}
+            </pre>-->
+            <div class="btn-group pull-left">
+                <a href="#" class="btn btn-success"@click="edit()" data-toggle="modal" data-target="#editStudent">Edit</a>
+                <a href="#" class="btn btn-danger" @click="remove()">Delete</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="editStudent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Добавить студента</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="fio">ФИО</label>
+                    <input type="text" class="form-control" id="fio" placeholder="ФИО" v-model="contact.name">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" class="form-control" id="phone" placeholder="Телефон" v-model="contact.phone">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" id="email" placeholder="E-mail" v-model="contact.email">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Факультет</label>
+                    <select class="form-control" id="fack" v-model="contact.fakultet">
+                        <option v-for="dep in departs" :value="dep.id"><b>{{dep.label}}</b> <span> ({{dep.dekan}})</span></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Адрес</label>
+                    <textarea  class="form-control" id="address" placeholder="Адрес проживания" v-model="contact.address"></textarea>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" @click="{{contact = Object.assign({}, contactModel);}}">Close</button>
+                <button type="button" class="btn btn-primary" @click="add()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/vue"></script>
+<script src="vueapp.js"></script>
+</body>
+</html>
